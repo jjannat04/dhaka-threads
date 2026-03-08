@@ -122,7 +122,7 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://dhakathreads.onrender.com',
+    'https://dhaka-threads.onrender.com',
 ]
 
 SESSION_COOKIE_SECURE = True
