@@ -69,18 +69,15 @@ DATABASES = {
 
 # Static & Media Storage Configuration
 # StaticFilesStorage is used instead of CompressedManifest to prevent Vercel build crashes
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# This is where Vercel will look for the final results
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
-
-# This is where you just pasted the /admin and /drf-yasg folders
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / "static",
 ]
 
 # CHANGE THIS LINE: Use CompressedManifest for better performance/reliability
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 # Add this to help Django find the admin assets
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -89,11 +86,10 @@ STATICFILES_FINDERS = [
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.StaticFilesStorage",
-    },
-}
+    }
+    
+    }
+
 
 # Cloudinary Credentials
 CLOUDINARY_STORAGE = {
