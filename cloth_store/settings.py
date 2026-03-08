@@ -67,8 +67,6 @@ DATABASES = {
     )
 }
 
-# Static & Media Storage Configuration
-# StaticFilesStorage is used instead of CompressedManifest to prevent Vercel build crashes
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -76,19 +74,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# CHANGE THIS LINE: Use CompressedManifest for better performance/reliability
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-# Add this to help Django find the admin assets
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-]
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    }
-    
-    }
 
 
 # Cloudinary Credentials
