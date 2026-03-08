@@ -120,3 +120,7 @@ AUTH_USER_MODEL = 'store.User'
 SITE_NAME = 'Dhaka Threads'
 LOGIN_REDIRECT_URL = 'home' 
 LOGOUT_REDIRECT_URL = 'home'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://dhakathreads.onrender.com',
+]
