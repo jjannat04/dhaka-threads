@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-3xl font-serif font-bold text-indigo-950 mb-10">Your Shopping Bag</h1>
+
+{% if cart_items %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <div class="lg:col-span-2 space-y-6">
+        {% for item in cart_items %}
+        <div class="flex items-center justify-between border-b border-slate-100 pb-6">
+            <div class="flex items-center gap-6">
+                <img src="{{ item.product.image.url }}" class="w-24 h-32 object-cover rounded-sm">
+                <div>
+                    <h3 class="font-bold text-slate-900">{{ item.product.name }}</h3>
+                    <p class="text-sm text-slate-500">Size: {{ item.product.get_size_display }} | Qty: {{ item.quantity }}</p>
+                    <a href="{% url 'remove_from_cart' item.product.id %}" class="text-xs text-red-500 hover:underline mt-2 inline-block">Remove</a>
+                </div>
+            </div>
+            <p class="font-serif font-bold text-lg text-indigo-950">৳{{ item.subtotal }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="bg-slate-50 p-8 h-fit border border-slate-100">
+        <h3 class="text-xl font-serif font-bold mb-6">Order Summary</h3>
+        <div class="flex justify-between border-b border-slate-200 pb-4 mb-6">
+            <span class="text-slate-600">Total Amount</span>
+            <span class="text-2xl font-bold text-indigo-950">৳{{ total }}</span>
+        </div>
+        <a href="{% url 'checkout' %}" class="w-full bg-indigo-950 text-white block text-center py-4 font-bold uppercase tracking-widest hover:bg-black transition">
+            Proceed to Checkout
+        </a>
+        <p class="text-[10px] text-slate-400 mt-4 text-center italic">Free delivery inside Dhaka for orders over ৳5000</p>
+    </div>
+</div>
+{% else %}
+<div class="text-center py-32 border-2 border-dashed border-slate-100">
+    <p class="text-slate-400 mb-6 font-serif text-xl">Your bag is as light as air.</p>
+    <a href="{% url 'home' %}" class="bg-indigo-950 text-white px-8 py-3 uppercase tracking-widest font-bold">Start Shopping</a>
+</div>
+{% endif %}
+{% endblock %}

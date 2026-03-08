@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 border border-gray-200 rounded-lg shadow-sm">
+    <h2 class="text-2xl font-serif mb-6 text-center">Login to Dhaka Threads</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-full bg-indigo-900 text-white py-2 mt-4">Login</button>
+    </form>
+    <p class="mt-4 text-center text-sm">Don't have an account? <a href="{% url 'signup' %}" class="text-indigo-600">Sign up</a></p>
+</div>
+<style>
+    /* Since Django's {{ field }} renders a raw <input>, 
+       we can use a small CSS block to target them if we don't want to use a package */
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #d1d5db; /* This adds the border box */
+        border-radius: 0.375rem;
+        outline: none;
+    }
+    input:focus {
+        border-color: #000;
+        ring: 2px;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <h1 class="text-3xl font-serif font-bold mb-8">Delivery Details</h1>
+    <form method="POST" class="space-y-6 bg-slate-50 p-8 border border-slate-100">
+        {% csrf_token %}
+        <div>
+            <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Full Name</label>
+            <input type="text" name="full_name" required class="w-full border p-3">
+        </div>
+        <div>
+            <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Shipping Address</label>
+            <textarea name="address" required class="w-full border p-3" rows="3"></textarea>
+        </div>
+        <div class="border-t pt-6">
+            <p class="text-xl font-serif font-bold text-indigo-950 mb-4">Total to Pay: ৳{{ total }}</p>
+            <button type="submit" class="w-full bg-indigo-950 text-white py-4 font-bold uppercase tracking-widest hover:bg-black">
+                Place Order (Cash on Delivery)
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

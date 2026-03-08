@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 class="mt-10 text-center text-3xl font-serif font-bold leading-9 tracking-tight text-indigo-950">
+            Create your Dhaka Threads Account
+        </h2>
+        <p class="mt-2 text-center text-sm text-slate-500 italic">
+            Join our boutique community for exclusive clothing updates.
+        </p>
+    </div>
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white px-8 py-10 shadow-xl rounded-lg border border-slate-100">
+            <form class="space-y-6" action="{% url 'signup' %}" method="POST">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+                        {% for error in form.non_field_errors %}
+                            <p class="text-sm text-red-700">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div>
+                        <label for="{{ field.id_for_label }}" class="block text-sm font-medium leading-6 text-slate-900">
+                            {{ field.label }}
+                        </label>
+                        <div class="mt-2">
+                            {{ field }}
+                        </div>
+                        {% if field.help_text %}
+                            <p class="mt-1 text-xs text-slate-400 leading-relaxed">{{ field.help_text }}</p>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p class="mt-1 text-xs text-red-600 font-semibold">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <div>
+                    <button type="submit" class="flex w-full justify-center rounded-sm bg-indigo-950 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition duration-200 uppercase tracking-widest">
+                        Register
+                    </button>
+                </div>
+            </form>
+
+            <p class="mt-10 text-center text-sm text-slate-500">
+                Already a member?
+                <a href="{% url 'login' %}" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 underline underline-offset-4">
+                    Sign in to your account
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    
+    input {
+        display: block;
+        width: 100%;
+        border-radius: 0.125rem;
+        border: 1px solid #d1d5db;
+        padding: 0.5rem 0.75rem;
+        color: #111827;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        transition: border-color 0.2s;
+    }
+    input:focus {
+        outline: none;
+        border-color: #312e81; /* indigo-950 */
+        ring: 2px solid #312e81;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dhaka Threads | Boutique Clothing</title>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900">
+    <nav class="bg-white border-b border-slate-200 py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50">
+        <a href="{% url 'home' %}" class="text-2xl font-serif font-bold tracking-[0.2em] text-indigo-950 uppercase">
+            Dhaka Threads
+        </a>
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium uppercase tracking-wider">
+    <a href="{% url 'home' %}" class="hover:text-indigo-600 transition">Shop</a>
+    
+    {% if user.is_authenticated %}
+        {% if user.is_staff %}
+            <a href="{% url 'admin_dashboard' %}" class="text-indigo-600 font-bold border-b-2 border-indigo-600 pb-1">
+                Dashboard
+            </a>
+        {% endif %}
+
+        <a href="{% url 'wishlist_detail' %}" class="hover:text-indigo-600 transition">Wishlist</a>
+        <a href="{% url 'cart_detail' %}" class="hover:text-indigo-600 transition">Cart</a>
+        <a href="{% url 'order_history' %}" class="hover:text-indigo-600 transition">My Orders</a>
+        
+        <form action="{% url 'logout' %}" method="post" class="inline ml-4">
+            {% csrf_token %}
+            <button type="submit" class="text-slate-400 hover:text-red-600 transition text-[10px] font-bold uppercase border border-slate-200 px-2 py-1 rounded-sm">
+                Logout
+            </button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}" class="hover:text-indigo-600 transition">Login</a>
+        <a href="{% url 'signup' %}" class="bg-indigo-950 text-white px-5 py-2 rounded-sm hover:bg-slate-800 transition">Join</a>
+    {% endif %}
+</div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 md:p-12 min-h-screen">
+        {% block content %}{% endblock %}
+    </main>
+
+    
+</body>
+</html>
