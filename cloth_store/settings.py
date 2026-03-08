@@ -69,6 +69,7 @@ DATABASES = {
 }
 # Unified Storage Configuration (Django 4.2+)
 # This forces Media to Cloudinary and Static to WhiteNoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_MANIFEST_STRICT = False
 STORAGES = {
     "default": {
