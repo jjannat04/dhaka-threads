@@ -12,7 +12,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-+6&r(b1xa3h0hq49+u_0^
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'dhaka-threads.onrender.com', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'dhaka-threads.onrender.com', '0.0.0.0', '.vercel.app']
 
 # Order is critical: cloudinary_storage MUST be above staticfiles
 INSTALLED_APPS = [
@@ -109,8 +109,8 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_URL = 'static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files (Uploaded images)
 MEDIA_URL = '/media/'
@@ -127,3 +127,9 @@ CSRF_TRUSTED_ORIGINS = [
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+
+# Static files configuration for Vercel
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles_build' / 'static'
+STATICFILES_DIRS = [BASE_DIR / 'static']
