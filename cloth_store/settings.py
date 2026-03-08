@@ -64,15 +64,15 @@ DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
+        ssl_require=True,
     )
 }
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # Unified Storage Configuration (Django 4.2+)
 # This forces Media to Cloudinary and Static to WhiteNoise
+WHITENOISE_MANIFEST_STRICT = False
 STORAGES = {
     "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        "BACKEND": "django_cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
@@ -123,6 +123,7 @@ LOGOUT_REDIRECT_URL = 'home'
 
 CSRF_TRUSTED_ORIGINS = [
     'https://dhaka-threads.onrender.com',
+    'https://*.vercel.app',
 ]
 
 SESSION_COOKIE_SECURE = True
