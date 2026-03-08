@@ -71,7 +71,9 @@ DATABASES = {
 # StaticFilesStorage is used instead of CompressedManifest to prevent Vercel build crashes
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Bridge for django-cloudinary-storage compatibility
 STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
