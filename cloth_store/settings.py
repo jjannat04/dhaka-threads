@@ -10,11 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-+6&r(b1xa3h0hq49+u_0^%nsi8khy83ewtf_lt@$rkcb52c5!a')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'dhaka-threads.onrender.com', '0.0.0.0', '.vercel.app']
 
-# Order is critical: cloudinary_storage MUST be above staticfiles
 INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.admin',
@@ -31,7 +30,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Best for static files when DEBUG=False
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,7 +58,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cloth_store.wsgi.application'
 
-# Database configuration
+# Database
 DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
@@ -67,24 +66,24 @@ DATABASES = {
         ssl_require=True,
     )
 }
-# Unified Storage Configuration (Django 4.2+)
-# This forces Media to Cloudinary and Static to WhiteNoise
-WHITENOISE_MANIFEST_STRICT = False
+
+# Static & Media Storage Configuration
+# StaticFilesStorage is used instead of CompressedManifest to prevent Vercel build crashes
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles_build' / 'static'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+# Bridge for django-cloudinary-storage compatibility
+STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
 STORAGES = {
     "default": {
-        "BACKEND": "django_cloudinary_storage.storage.MediaCloudinaryStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.StaticFilesStorage",
     },
 }
-WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['js']
 
 # Cloudinary Credentials
 CLOUDINARY_STORAGE = {
@@ -101,7 +100,7 @@ EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS') == 'True'
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
-# Password validation
+# Security & Internationalization
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -109,17 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Media files (Uploaded images)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -135,6 +128,3 @@ CSRF_TRUSTED_ORIGINS = [
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
-
-# Static files configuration for Vercel
