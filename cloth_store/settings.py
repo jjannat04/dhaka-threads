@@ -77,7 +77,11 @@ STATICFILES_DIRS = [
 
 # Bridge for django-cloudinary-storage compatibility
 STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
-
+# Add this to help Django find the admin assets
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",

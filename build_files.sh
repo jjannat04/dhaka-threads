@@ -1,10 +1,9 @@
 #!/bin/bash
-
-# Install dependencies
 python3.12 -m pip install -r requirements.txt --break-system-packages
+# Ensure whitenoise is active
+python3.12 -m pip install whitenoise --break-system-packages 
 
-# Create the folder manually so Vercel doesn't complain if it's empty
 mkdir -p staticfiles_build/static
 
-# Run collectstatic
+# The --clear flag ensures we don't have old broken paths
 python3.12 manage.py collectstatic --noinput --clear
