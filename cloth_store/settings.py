@@ -69,16 +69,22 @@ DATABASES = {
 }
 # Unified Storage Configuration (Django 4.2+)
 # This forces Media to Cloudinary and Static to WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_MANIFEST_STRICT = False
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles_build' / 'static'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
 STORAGES = {
     "default": {
         "BACKEND": "django_cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['js']
 
 # Cloudinary Credentials
 CLOUDINARY_STORAGE = {
@@ -132,6 +138,3 @@ CSRF_COOKIE_SECURE = True
 
 
 # Static files configuration for Vercel
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles_build' / 'static'
-STATICFILES_DIRS = [BASE_DIR / 'static']
